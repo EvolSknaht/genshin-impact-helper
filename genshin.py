@@ -180,16 +180,12 @@ def makeResult(result: str, data=None):
     )
 
 
-def wxPush(appToken: str, uid: str, errCode=None):
-    if errCode is None:
-        msg = '原神每日签到成功'
-    else:
-        msg = '签到失败：' + errCode
+def wxPush(appToken: str, uid: str, msg=None):
     try:
         url = 'http://wxpusher.zjiecode.com/api/send/message'
         data = {
             'appToken': appToken,
-            'content': msg,
+            'content': json.dumps(msg).encode('utf-8'),
             'contentType': 1,
             'uids': [uid]
         }
@@ -216,22 +212,23 @@ if __name__ == "__main__":
         jdict = Sign(cookie).run()
         jstr = json.dumps(jdict, ensure_ascii=False)
         code = jdict['retcode']
+        msg = jdict['message']
     except Exception as e:
         jstr = str(e)
 
     result = makeResult('Failed', jstr)
     try:
         code
+        msg
     except NameError:
         code = -1
+        msg = 'error'
 
     # 0:        success
     # -5003:    already signed in
     if code in [0, -5003]:
         result = makeResult('Success', jstr)
         ret = 0
-        wxPush(appToken, uid)
-    else:
-        wxPush(appToken, uid, jstr)
+    wxPush(appToken, uid, msg)
     logging.info(result)
     exit(ret)
