@@ -185,11 +185,11 @@ def wxPush(appToken: str, uid: str, msg=None):
         url = 'http://wxpusher.zjiecode.com/api/send/message'
         data = {
             'appToken': appToken,
-            'content': json.dumps(msg,ensure_ascii=False),
+            'content': msg,
             'contentType': 1,
             'uids': [uid]
         }
-        response = json.loads(requests.post(url, json.dumps(data, ensure_ascii=False), headers={
+        response = json.loads(requests.post(url, json.dumps(data, ensure_ascii=False).encode('UTF-8'), headers={
             'Content-Type': "application/json"
         }).text)
         logging.info(response)
@@ -198,7 +198,7 @@ def wxPush(appToken: str, uid: str, msg=None):
 
 
 if __name__ == "__main__":
-    seconds = random.randint(10, 300)
+    seconds = random.randint(10, 30)
     ret = -1
 
     logging.info('Sleep for %s seconds ...' % (seconds))
