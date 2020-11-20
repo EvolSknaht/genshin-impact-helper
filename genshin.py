@@ -222,7 +222,7 @@ if __name__ == "__main__":
         msg
     except NameError:
         code = -1
-        msg = 'error'
+        msg = jstr
 
     # 0:        success
     # -5003:    already signed in
