@@ -185,7 +185,7 @@ def wxPush(appToken: str, uid: str, msg=None):
         url = 'http://wxpusher.zjiecode.com/api/send/message'
         data = {
             'appToken': appToken,
-            'content': json.dumps(msg).encode('utf-8'),
+            'content': json.dumps(msg,ensure_ascii=False),
             'contentType': 1,
             'uids': [uid]
         }
