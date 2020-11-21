@@ -198,7 +198,7 @@ def wxPush(appToken: str, uid: str, msg=None):
 
 
 if __name__ == "__main__":
-    seconds = random.randint(10, 30)
+    seconds = random.randint(10, 300)
     ret = -1
 
     logging.info('Sleep for %s seconds ...' % (seconds))
